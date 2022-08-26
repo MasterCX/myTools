@@ -3,12 +3,14 @@ import os
 
 
 def resize(path, outputPath, xR, yR, fileName):
-    img = cv2.imread(path + '/' + fileName, 2)
+    img = cv2.imread(path + '/' + fileName, cv2.IMREAD_UNCHANGED)
     imgShape = img.shape
-    newH = int(imgShape[0]*xR)
-    newW = int(imgShape[1]*yR)
+    # newH = int(imgShape[0]*xR)
+    # newW = int(imgShape[1]*yR)
+    newH = 1280
+    newW = 1280
     newImg = cv2.resize(img, (newW, newH))
-    cv2.imwrite(outputPath + '/new' + fileName, newImg)
+    cv2.imwrite(outputPath + '/' + fileName, newImg)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,10 @@
+*.jpg
+.*png
+labels/
+labels_output/
+json/
+data/
+data_out/
+*.zip
+*.txt
+*/
