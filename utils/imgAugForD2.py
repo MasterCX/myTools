@@ -40,17 +40,17 @@ def output_json(psoi_aug, fileName, imgdata):
 def read_poly_from_json(jsonPath):
     with open(jsonPath, 'r', encoding='utf-8') as fw:
         j = json.load(fw)
-    polys = []
-    labelList = []
-    for obj in j['shapes']:
-        poly = []
-        points = obj['points']
-        label = obj['label']
-        labelList.append(label)
-        for point in points:
-            newP = (point[0], point[1])
-            poly.append(newP)
-        polys.append(poly)
+        polys = []
+        labelList = []
+        for obj in j['shapes']:
+            poly = []
+            points = obj['points']
+            label = obj['label']
+            labelList.append(label)
+            for point in points:
+                newP = (point[0], point[1])
+                poly.append(newP)
+            polys.append(poly)
     return polys, labelList
 
 
@@ -80,7 +80,7 @@ def aug(imagePath, jsonPath, fileNum):
             json.dump(jsonObj, f)
     # ia.imshow(psoi_aug.draw_on_image(image_aug, alpha_face=0.2, size_points=7))
     # save
-    # imageio.imwrite(f'data_out/{fileNum}_Flipud.png', image_aug)
+    imageio.imwrite(f'data_out/{fileNum}_Flipud.png', image_aug)
 
     aug = iaa.Sequential([
         iaa.Fliplr(1.0)
@@ -95,7 +95,7 @@ def aug(imagePath, jsonPath, fileNum):
             json.dump(jsonObj, f)
     # ia.imshow(psoi_aug.draw_on_image(image_aug, alpha_face=0.2, size_points=7))
     # save
-    # imageio.imwrite(f'data_out/{fileNum}_Fliplr.png', image_aug)
+    imageio.imwrite(f'data_out/{fileNum}_Fliplr.png', image_aug)
 
     for i in range(4):
         aug = iaa.Sequential([
@@ -113,7 +113,7 @@ def aug(imagePath, jsonPath, fileNum):
         # ia.imshow(psoi_aug.draw_on_image(
         #     image_aug, alpha_face=0.2, size_points=7))
         # save
-        # imageio.imwrite(f'data_out/{fileNum}_rotate{i}.png', image_aug)
+        imageio.imwrite(f'data_out/{fileNum}_rotate{i}.png', image_aug)
 
     for i in range(3):
         aug = iaa.Sequential([
@@ -132,7 +132,7 @@ def aug(imagePath, jsonPath, fileNum):
         # ia.imshow(psoi_aug.draw_on_image(
         #     image_aug, alpha_face=0.2, size_points=7))
         # save
-        # imageio.imwrite(f'data_out/{fileNum}_ScaleY{i}.png', image_aug)
+        imageio.imwrite(f'data_out/{fileNum}_ScaleY{i}.png', image_aug)
 
     for i in range(3):
         aug = iaa.Sequential([
@@ -149,7 +149,7 @@ def aug(imagePath, jsonPath, fileNum):
         # ia.imshow(psoi_aug.draw_on_image(
         #     image_aug, alpha_face=0.2, size_points=7))
         # save
-        # imageio.imwrite(f'data_out/{fileNum}_ScaleX{i}.png', image_aug)
+        imageio.imwrite(f'data_out/{fileNum}_ScaleX{i}.png', image_aug)
 
 
 if __name__ == '__main__':

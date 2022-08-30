@@ -7,4 +7,4 @@ data/
 data_out/
 *.zip
 *.txt
-*/
+__pycache__/
