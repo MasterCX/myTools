@@ -8,3 +8,5 @@ data_out/
 *.zip
 *.txt
 __pycache__/
+data40/
+smallImg/
