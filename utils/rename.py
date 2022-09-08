@@ -5,8 +5,8 @@ from sympy import arg
 
 
 def rename():
-    path = 'img'
-    format = '.jpg'
+    path = 'smallImg'
+    format = '.png'
     filelist = os.listdir(path)
     total_num = len(filelist)
     i = 0
@@ -14,7 +14,7 @@ def rename():
 
         if item.endswith(format):
             src = os.path.join(os.path.abspath(path), item)
-            dst = os.path.join(os.path.abspath(path), '' + str(i) + '.jpg')
+            dst = os.path.join(os.path.abspath(path), '' + str(i) + format)
             print(dst)
             try:
                 os.rename(src, dst)
