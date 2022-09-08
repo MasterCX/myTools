@@ -67,6 +67,7 @@ def aug(imagePath, jsonPath, fileNum):
 
     # 添加增强方法
     aug = iaa.Sequential([
+        iaa.add((-30,30)),
         iaa.Flipud(1.0)
     ])
     # 将增强方法作用到原图和原多边形label上
@@ -157,7 +158,7 @@ if __name__ == '__main__':
     # aug(f'data\\16612608596399.png', f'data/16612608596399.json')
 
     i = 1
-    fileList = os.listdir('./data')
+    fileList = os.listdir('./img')
     for file in fileList:
         if file.endswith('png'):
             aug(f'data\\{file}', f'data/{file[:-4]}.json', i)

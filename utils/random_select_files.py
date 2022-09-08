@@ -33,5 +33,5 @@ def randomCopyFile(sourDir, dstDir, num):
 if __name__ == '__main__':
     source = "../../wood/images/s/"
     dst = "./img/"
-    num = 600
+    num = 400
     randomCopyFile(source, dst, num)
