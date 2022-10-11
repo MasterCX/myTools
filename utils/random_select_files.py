@@ -31,7 +31,7 @@ def randomCopyFile(sourDir, dstDir, num):
 
 
 if __name__ == '__main__':
-    source = "../../wood/images/s/"
-    dst = "./img/"
-    num = 400
+    source = "../../wood/images/C花纹/"
+    dst = "../../wood/train/flower/"
+    num = 500
     randomCopyFile(source, dst, num)

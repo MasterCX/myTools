@@ -56,13 +56,13 @@ def augmentation(path, outputPath, file):
 
 if __name__ == '__main__':
     imgPath = 'img'
-    format = '.png'
-    labelPath = 'labels'
+    format = '.jpg'
     imgOutputPath = 'img_output'
-    labelOutputPath = 'labels_output'
     fileList = os.listdir(imgPath)
     for file in fileList:
         augmentation(imgPath, imgOutputPath, file)
-    imgList = os.listdir(imgOutputPath)
-    for img in imgList:
-        change_labels(img, labelPath, labelOutputPath)
+    # imgList = os.listdir(imgOutputPath)
+    # labelPath = 'labels'
+    # labelOutputPath = 'labels_output'
+    # for img in imgList:
+    #     change_labels(img, labelPath, labelOutputPath)
