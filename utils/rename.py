@@ -5,7 +5,7 @@ from sympy import arg
 
 
 def rename():
-    path = 'smallImg'
+    path = 'position1/source/'
     format = '.png'
     filelist = os.listdir(path)
     total_num = len(filelist)

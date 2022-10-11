@@ -85,15 +85,17 @@ def img_to_subImg_with_json(filePath):
                 x, y, w, h = getbbox(p[0], height, width)
                 if w <= 5 or h <= 5:
                     continue
-                points = p[0] - np.array([x-1, y-1])
+                points = p[0] - np.array([x, y])
                 points = points.tolist()
                 jsonObj = {}
                 jsonObj['points'] = points
                 jsonObj['label'] = p[1]
-                cv2.imwrite(f'{file[:-4]}_{key}.png',
-                            img[y-1:y+h+1, x-1:x+w+1])
-                with open(f'{file[:-4]}_{key}.json', 'w') as f:
-                    json.dump(jsonObj, f)
+                if p[1] != "edge":
+                    # print(img.shape)
+                    cv2.imwrite(f'subImg/{file[:-4]}_{key}.png',
+                                img[y:y+h, x:x+w])
+                    with open(f'subImg/{file[:-4]}_{key}.json', 'w') as f:
+                        json.dump(jsonObj, f)
 
 
 def imgJson_to_yoloTxt(filePath):
@@ -105,7 +107,7 @@ def imgJson_to_yoloTxt(filePath):
             writeLines = []
             for key, p in enumerate(polys):
                 x, y, w, h = getbbox(p[0], height, width)
-                if w <= 5 or h <= 5:
+                if w <= 5 and h <= 5:
                     continue
                 # 这里不需要label 所以可以先写死占位
                 writeLine = f'0 {(x + w/2)/width} {(y + h/2)/height} {w/width} {h/height}\n'
@@ -118,13 +120,17 @@ def imgJson_to_yoloTxt(filePath):
                 # cv2.imwrite(f'{file[:-4]}_{key}.png',
                 #             img[y-1:y+h+1, x-1:x+w+1])
             if writeLines:
-                with open(f'{file[:-4]}.txt', 'w') as f:
+                with open(f'{filePath}{file[:-4]}.txt', 'w') as f:
                     f.writelines(writeLines)
             else:
-                with open(f'{file[:-4]}.txt', 'w') as f:
+                with open(f'{filePath}{file[:-4]}.txt', 'w') as f:
                     f.writelines('0 0 0 0 0')
 
 
-filePath = './data/'
-img_to_subImg_with_json(filePath)
-# imgJson_to_yoloTxt(filePath)
+# filePath = './data/'
+# for file in os.listdir(filePath):
+#     img_to_subImg_with_json(filePath + file + "/")
+
+
+filePath = 'D:\\project\\smallObjectAug\\SmallObjectAugmentation\\background\\'
+imgJson_to_yoloTxt(filePath)

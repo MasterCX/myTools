@@ -1,13 +1,13 @@
 import os
 
-path = './smallImg'
+path = 'D:\\project\\smallObjectAug\\SmallObjectAugmentation\\background\\'
 fileList = os.listdir(path)
 files = []
 for file in fileList:
     if file.endswith('.png'):
-        files.append(f'./smallImg/{file}\n')
+        files.append(f'./background/{file}\n')
 
-with open('small.txt', 'w') as f:
+with open('train.txt', 'w') as f:
     f.writelines(files)
 
 
