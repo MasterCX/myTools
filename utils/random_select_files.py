@@ -17,7 +17,6 @@ def newDir(fileDir):
         print(fileDir+'already exists!!!')
 
 
-
 def randomCopyFile(sourDir, dstDir, num):
     pathDir = os.listdir(sourDir)
     newDir(dstDir)
@@ -31,7 +30,7 @@ def randomCopyFile(sourDir, dstDir, num):
 
 
 if __name__ == '__main__':
-    source = "../../wood/images/C花纹/"
-    dst = "../../wood/train/flower/"
-    num = 500
+    source = "D:\\project\\smallObjectAug\\SmallObjectAugmentation\\temp\\"
+    dst = "D:\\project\\smallObjectAug\\SmallObjectAugmentation\\save\\"
+    num = 600
     randomCopyFile(source, dst, num)
