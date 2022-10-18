@@ -1,19 +1,20 @@
 import cv2
 import numpy as np
 import json
+import time
 
 import util
 import rotate_img
 
 
-img1 = cv2.imread(
-    '2022-07-24_1658639428045_J66421181_origin.jpg', cv2.IMREAD_UNCHANGED)
-img2 = cv2.imread(
-    '2022-07-31_1659245052580_00K02486056_origin.jpg', cv2.IMREAD_UNCHANGED)
-f1 = open(
-    '2022-07-24_1658639428045_J66421181_origin.txt', 'r')
-f2 = open(
-    '2022-07-31_1659245052580_00K02486056_origin.txt', 'r')
+# img1 = cv2.imread(
+#     '2022-07-24_1658639428045_J66421181_origin.jpg', cv2.IMREAD_UNCHANGED)
+# img2 = cv2.imread(
+#     '2022-07-31_1659245052580_00K02486056_origin.jpg', cv2.IMREAD_UNCHANGED)
+# f1 = open(
+#     '2022-07-24_1658639428045_J66421181_origin.txt', 'r')
+# f2 = open(
+#     '2022-07-31_1659245052580_00K02486056_origin.txt', 'r')
 
 
 def label_subImg_info(fileName):
@@ -60,23 +61,37 @@ def read_poly_from_json(jsonPath):
     return poly
 
 
+def binaryImg(path):
+    img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+    start = time.time()
+    x, thr = cv2.threshold(img, 240, 255, cv2.THRESH_BINARY)
+    end = time.time()
+    cv2.imshow('threshold', thr)
+    print(thr.shape)
+    print(f'time: {end - start}')
+    cv2.waitKey(0)
+
+
+p = 'D:\\img\\1.png'
+binaryImg(p)
+
 # print(read_poly_from_json())
 # ===================================================
-infoList1 = label_subImg_info(f1)
-infoList2 = label_subImg_info(f2)
+# infoList1 = label_subImg_info(f1)
+# infoList2 = label_subImg_info(f2)
 
-for item in infoList1:
+# for item in infoList1:
 
-    sub = get_subImg(img1, item[1], item[3], item[4])
-    h, w, c = sub.shape
+#     sub = get_subImg(img1, item[1], item[3], item[4])
+#     h, w, c = sub.shape
 
-    # for i in range(36):
-    #     deg = (i+1)*10
-    deg = 45
-    rotated = rotate_img.rotated_small_image(
-        sub, (w/2, h/2), deg, infoList2[0][3] * 2, infoList2[0][4] * 2)
-    img1 = insert_subImg(img1, rotated, item[1])
-cv2.imwrite(f'{item[1]}_rotated_{deg}.jpg', img1)
+#     # for i in range(36):
+#     #     deg = (i+1)*10
+#     deg = 45
+#     rotated = rotate_img.rotated_small_image(
+#         sub, (w/2, h/2), deg, infoList2[0][3] * 2, infoList2[0][4] * 2)
+#     img1 = insert_subImg(img1, rotated, item[1])
+# cv2.imwrite(f'{item[1]}_rotated_{deg}.jpg', img1)
 # ===================================================
 
 
