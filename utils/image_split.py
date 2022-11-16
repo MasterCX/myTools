@@ -7,8 +7,8 @@ number_w = 6            # 水平6份
 number_h = 2            # 垂直2份
 number_o = 0            # 重叠部分
 
-path_origin = "D:\\img\\zhizhen\\1006"
-path_target = "D:\\img\\zhizhen\\1006out"
+path_origin = "D:\\img\\zhizhen\\new"
+path_target = "D:\\img\\zhizhen\\newout"
 
 
 def save_image(image, name, path):

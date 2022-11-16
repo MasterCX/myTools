@@ -74,8 +74,11 @@ def read_poly_from_json(jsonPath):
 #     cv2.imwrite(f'{key}.png', img[y-1:y+h+2, x-1:x+w+2])
 
 
-def img_to_subImg_with_json(filePath):
+def img_to_subImg_with_json(filePath, TopOrBottom):
+    print(f'total: {len(os.listdir(filePath))}')
+    i = 0
     for file in os.listdir(filePath):
+
         if file.endswith('.png'):
             img = cv2.imread(filePath + file, cv2.IMREAD_UNCHANGED)
             height, width, c = img.shape
@@ -84,6 +87,8 @@ def img_to_subImg_with_json(filePath):
             for key, p in enumerate(polys):
                 x, y, w, h = getbbox(p[0], height, width)
                 if w <= 5 or h <= 5:
+                    print(f'pass: {file}')
+                    i = i + 1
                     continue
                 points = p[0] - np.array([x, y])
                 points = points.tolist()
@@ -92,14 +97,22 @@ def img_to_subImg_with_json(filePath):
                 jsonObj['label'] = p[1]
                 if p[1] != "edge":
                     # print(img.shape)
-                    cv2.imwrite(f'subImg/{file[:-4]}_{key}.png',
-                                img[y:y+h, x:x+w])
-                    with open(f'subImg/{file[:-4]}_{key}.json', 'w') as f:
-                        json.dump(jsonObj, f)
+                    if TopOrBottom == 'top':
+                        cv2.imwrite(f'subImgTop/{file[:-4]}_{key}.png',
+                                    img[y:y+h, x:x+w])
+                        with open(f'subImgTop/{file[:-4]}_{key}.json', 'w') as f:
+                            json.dump(jsonObj, f)
+                    elif TopOrBottom == 'bottom':
+                        cv2.imwrite(f'subImgBottom/{file[:-4]}_{key}.png',
+                                    img[y:y+h, x:x+w])
+                        with open(f'subImgBottom/{file[:-4]}_{key}.json', 'w') as f:
+                            json.dump(jsonObj, f)
+    print(f'subImg passed totally: {i}')
 
 
 def imgJson_to_yoloTxt(filePath):
     for file in os.listdir(filePath):
+
         if file.endswith('.png'):
             img = cv2.imread(filePath + file, cv2.IMREAD_UNCHANGED)
             height, width, c = img.shape
@@ -127,10 +140,11 @@ def imgJson_to_yoloTxt(filePath):
                     f.writelines('0 0 0 0 0')
 
 
-# filePath = './data/'
-# for file in os.listdir(filePath):
-#     img_to_subImg_with_json(filePath + file + "/")
+# filePath = './dataTop/'
+# # for file in os.listdir(filePath):
+# #     img_to_subImg_with_json(filePath + file + "/")
+# img_to_subImg_with_json(filePath, 'top')
 
 
-filePath = 'D:\\project\\smallObjectAug\\SmallObjectAugmentation\\background\\'
+filePath = 'D:\\project\\smallObjectAug\\SmallObjectAugmentation\\1027backgroundTop\\traint\\'
 imgJson_to_yoloTxt(filePath)
