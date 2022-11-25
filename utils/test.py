@@ -6,6 +6,10 @@ import os
 import util
 import rotate_img
 
+import PIL.Image as Image
+import torchvision.transforms
+from torchvision import transforms
+
 
 # img1 = cv2.imread(
 #     '2022-07-24_1658639428045_J66421181_origin.jpg', cv2.IMREAD_UNCHANGED)
@@ -93,6 +97,11 @@ import rotate_img
 
 
 
+ 
+ 
+
+
+
 
 def binaryImg(path):
     for file in os.listdir(path):
@@ -100,5 +109,22 @@ def binaryImg(path):
         x , thr =  cv2.threshold(img, 180, 255, cv2.THRESH_BINARY)
         cv2.imwrite(path +file[:-4] + "_binary.png", thr)
 
-p =  "F:\\image\\zhizhen\\binary\\"
-binaryImg(p)
+p =  "F:\\image\\test\\1.jpg"
+# binaryImg(p)
+
+#读入图片
+image=Image.open(p)
+ 
+#生成一个CenterCrop类的对象,用来将图片从中心裁剪成224*224
+# crop_obj = torchvision.transforms.RandomResizedCrop(528)  
+crop_obj = torchvision.transforms.Compose([
+                                    transforms.Resize(384),
+                                #    transforms.CenterCrop([528,528]),
+                                #    transforms.CenterCrop([384,384]),
+                                    #  transforms.RandomHorizontalFlip(),
+                                    #  transforms.RandomVerticalFlip(),
+                                    ])
+image = crop_obj(image)  
+ 
+#将裁剪之后的图片保存下来
+image.save(p[:-5] + '2.png', format='PNG')

@@ -54,26 +54,31 @@ def read_poly_from_json(jsonPath):
     return polys, labelList
 
 
-def aug(imagePath, jsonPath, fileNum):
+def aug(imagePath, jsonPath, fileNum, fileName,outputPath):
     # 读图和label
     image = imageio.imread(imagePath)
-    polys, labelList = read_poly_from_json(jsonPath)
+    if jsonPath:
+        polys, labelList = read_poly_from_json(jsonPath)
 
-    # 生成需要的多边形对象
-    PolygonList = []
-    for key, p in enumerate(polys):
-        PolygonList.append(Polygon(p, labelList[key]))
-    psoi = ia.PolygonsOnImage(PolygonList, shape=image.shape)
+        # 生成需要的多边形对象
+        PolygonList = []
+        for key, p in enumerate(polys):
+            PolygonList.append(Polygon(p, labelList[key]))
+        psoi = ia.PolygonsOnImage(PolygonList, shape=image.shape)
 
     # 添加增强方法
     aug = iaa.Sequential([
-        iaa.Add((-30,30)),
-        iaa.Flipud(0.5),
-        iaa.Fliplr(0.5),
-        iaa.Affine(rotate=(-15, 15))
+        iaa.GammaContrast((0.5,2.0)) ,
+        iaa.Add((-25,25)),
+        iaa.Affine(rotate=(-4, 4))
     ])
     # 将增强方法作用到原图和原多边形label上
-    image_aug, psoi_aug = aug(image=image, polygons=psoi)
+    if jsonPath:
+        image_aug, psoi_aug = aug(image=image, polygons=psoi)
+    else:
+        image_aug = aug(image=image)
+        imageio.imwrite(outputPath + f'/{fileName[:-4]}_val_{fileNum}.png', image_aug)
+        return
 
     _, imgEncode = cv2.imencode('.png', image_aug)
     imgdata: str = str(base64.b64encode(imgEncode))[2:-1]
@@ -91,7 +96,8 @@ if __name__ == '__main__':
     i = 1
     fileList = os.listdir('./img')
     for file in fileList:
-        if file.endswith('png'):
-            aug(f'img\\{file}', f'img/{file[:-4]}.json', i)
-            # print(i)
+        if file.endswith('jpg'):
+            aug(f'img\\{file}', '', i, file[:-4],'./img')
+            # aug(f'img\\{file}', f'img/{file[:-4]}.json', i)
+            print(i)
             i += 1

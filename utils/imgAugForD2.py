@@ -160,7 +160,7 @@ if __name__ == '__main__':
     i = 1
     fileList = os.listdir('./img')
     for file in fileList:
-        if file.endswith('png'):
+        if file.endswith('jpg'):
             aug(f'data\\{file}', f'data/{file[:-4]}.json', i)
             # print(i)
             i += 1
