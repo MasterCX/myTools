@@ -11,6 +11,7 @@ path_origin = "E:\\img\\input"
 path_target = "E:\\img\\output"
 
 
+
 def save_image(image, name, path):
     os.makedirs(path, exist_ok=True)
     save_path = os.path.join(path, f"{name}.png")

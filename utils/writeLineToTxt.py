@@ -1,14 +1,32 @@
 import os
 
-path = 'D:\\project\\smallObjectAug\\SmallObjectAugmentation\\background\\'
-fileList = os.listdir(path)
-files = []
-for file in fileList:
-    if file.endswith('.png'):
-        files.append(f'./background/{file}\n')
+path = 'D:\\project\\smallObjectAug\\SmallObjectAugmentation\\'
 
-with open('train.txt', 'w') as f:
-    f.writelines(files)
+
+def writeTxt(path, backgroundOrSub):
+    files = []
+    folder = ''
+    fileName = ''
+    if backgroundOrSub == 'sub':
+        folder = 'smallImg'
+        fileName = 'small'
+    elif backgroundOrSub == 'background':
+        folder = 'background'
+        fileName = 'train'
+
+    fileList = os.listdir(path + folder + '\\')
+    for file in fileList:
+        if file.endswith('.png'):
+            if folder == '' or fileName == '':
+                print('errrrrrrr!!!!!')
+            files.append(f'./{folder}/{file}\n')
+
+    with open(f'{fileName}.txt', 'w') as f:
+        f.writelines(files)
+
+
+writeTxt(path, 'background')
+# writeTxt(path, 'sub')
 
 
 # path = './data'

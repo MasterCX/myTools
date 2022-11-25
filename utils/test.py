@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import json
+import time
 import os
 
 import util
@@ -64,9 +65,12 @@ from torchvision import transforms
 #         poly.append(points)
 #     return poly
 
+# print(read_poly_from_json())
+# ===================================================
 
-# # print(read_poly_from_json())
-# # ===================================================
+# print(read_poly_from_json())
+
+
 # infoList1 = label_subImg_info(f1)
 # infoList2 = label_subImg_info(f2)
 
@@ -82,7 +86,8 @@ from torchvision import transforms
 #         sub, (w/2, h/2), deg, infoList2[0][3] * 2, infoList2[0][4] * 2)
 #     img1 = insert_subImg(img1, rotated, item[1])
 # cv2.imwrite(f'{item[1]}_rotated_{deg}.jpg', img1)
-# # ===================================================
+
+# ===================================================
 
 
 # # cv2.imwrite('hah.jpg', insert_subImg(img1, x, (500, 500)))
@@ -97,17 +102,11 @@ from torchvision import transforms
 
 
 
- 
- 
-
-
-
-
 def binaryImg(path):
     for file in os.listdir(path):
         img = cv2.imread(path + file, cv2.IMREAD_GRAYSCALE)
-        x , thr =  cv2.threshold(img, 180, 255, cv2.THRESH_BINARY)
-        cv2.imwrite(path +file[:-4] + "_binary.png", thr)
+        x, thr = cv2.threshold(img, 210, 255, cv2.THRESH_BINARY)
+        cv2.imwrite(path + file[:-4] + "_binary.png", thr)
 
 p =  "F:\\image\\test\\1.jpg"
 # binaryImg(p)
@@ -128,3 +127,5 @@ image = crop_obj(image)
  
 #将裁剪之后的图片保存下来
 image.save(p[:-5] + '2.png', format='PNG')
+
+
